@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<title>Persona.js example</title>
+		<script src="src/persona.js"></script>
+		<script>
+			window.onload = function(){
+				console.info('--- INLINE BEHAVIOUR TEST ---');
+				
+				var Dude = Persona.describe(new Trait({
+					characterize: function(self, info){self.name = info.name;},
+					behave: function(self){self.rock = function(){console.log('My name is ' + this.name + ' and I rock, dude!');};}
+				})),
+				john = new Dude({name: 'John Doe'}),
+				joe = new Dude({name: 'Average Joe'});
+				
+				console.debug('John', john);
+				console.debug('Joe', john);
+				console.debug('John == Joe', john == joe);
+				console.debug('John is Persona', john instanceof Persona);
+				console.debug('John is Dude', john instanceof Dude);
+				
+				console.log('john.rock()');
+				john.rock();
+				
+				console.log('joe.rock()');
+				joe.rock();
+				
+				console.info('--- MULTIPLE BEHAVIOURS TEST ---');
+				
+				var Named = new Trait({
+					characterize: function(self, info){self.name = info.name;}
+				}),
+				Goer = new Trait({
+					characterize: function(self, info){self.movementAction = info.movementAction || 'goes';},
+					behave: function(self){self.go = function(where){console.log(this.name + ' ' + this.movementAction + ' ' + where);};}
+				}),
+				Flier = new Trait({
+					characterize: function(self, info){self.movementAction = 'flies to';}
+				}),
+				Runner = new Trait({
+					characterize: function(self, info){self.movementAction = 'runs';}
+				}),
+				Eater = new Trait({
+					characterize: function(self, info){self.food = info.food;},
+					behave: function(self){self.eat = function(){console.log(this.name + ' eats ' + this.food);};}
+				});
+				
+				var Dog = Persona.describe(Named, Goer, Runner, Eater),
+				Pterodactyl = Persona.describe(Named, Goer, Flier, Eater);
+				
+				var lessie = new Dog({name: 'Lessie', food: 'jerky beef'}),
+				juno = new Pterodactyl({name: 'Juno', food: 'small dinosaurs'});
+				
+				console.debug('Lessie', lessie);
+				console.debug('Juno', lessie);
+				
+				console.log('lessie.go(\'home\'); lessie.eat();');
+				lessie.go('home');
+				lessie.eat();
+				
+				console.log('juno.go(\'the nest\'); juno.eat();');
+				juno.go('the nest');
+				juno.eat();
+			};
+		</script>
+	</head>
+	<body>
+		<h1>Persona.js examples</h1>
+		<p>Please open your browser inspector!</p>
+	</body>
+</html>
