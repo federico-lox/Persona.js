@@ -1,7 +1,7 @@
 /**
  * Persona.js
  *
- * @author Federico "Lox" Lucignano <federico.lox(at)gmail.com>
+ * @author Federico "Lox" Lucignano <http://plus.ly/federico.lox>
  *
  * @see http://github.com/federico-lox/Persona.js
  **/
